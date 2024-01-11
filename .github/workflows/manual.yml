@@ -1,0 +1,25 @@
+name: Manual workflow
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Person to greet'
+        default: 'World'
+        required: true
+        type: string
+
+jobs:
+  trigger_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger child repo workflow
+        uses: convictional/trigger-workflow-and-wait@v1.6.1
+        with:
+          owner: michaelbobrovsky
+          repo: test-repo-1
+          workflow_file_name: manual.yml
+          ref: main
+          wait_interval: 10
+          propagate_failure: true
+          trigger_workflow: true
+          wait_workflow: true
